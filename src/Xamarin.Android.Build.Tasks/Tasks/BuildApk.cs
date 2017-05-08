@@ -189,8 +189,7 @@ namespace Xamarin.Android.Tasks
 						count = 0;
 					}
 				}
-				if (StubApplicationDataFile != null && File.Exists (StubApplicationDataFile))
-					apk.Archive.AddFile (StubApplicationDataFile, Path.GetFileName (StubApplicationDataFile));
+
 			}
 			MonoAndroidHelper.CopyIfZipChanged (apkOutputPath + "new", apkOutputPath);
 			File.Delete (apkOutputPath + "new");

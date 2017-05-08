@@ -84,6 +84,7 @@ namespace Xamarin.Android.Tasks {
 		public string SdkDir { get; set; }
 		public string SdkVersion { get; set; }
 		public bool Debug { get; set; }
+		public bool MultiDex { get; set; }
 		public bool NeedsInternet { get; set; }
 		public string VersionCode {
 			get {
@@ -355,6 +356,9 @@ namespace Xamarin.Android.Tasks {
 
 			var providerNames = AddMonoRuntimeProviders (app);
 
+			if (MultiDex)
+				app.Add (CreateMonoRuntimeProvider ("mono.android.MultiDexLoader", null, initOrder: ++AppInitOrder));
+				
 			if (Debug) {
 				app.Add (new XComment ("suppress ExportedReceiver"));
 				app.Add (new XElement ("receiver",
@@ -583,7 +587,7 @@ namespace Xamarin.Android.Tasks {
 
 		IList<string> AddMonoRuntimeProviders (XElement app)
 		{
-			app.Add (CreateMonoRuntimeProvider ("mono.MonoRuntimeProvider", null));
+			app.Add (CreateMonoRuntimeProvider ("mono.MonoRuntimeProvider", null, AppInitOrder));
 
 			var providerNames = new List<string> ();
 
@@ -609,7 +613,7 @@ namespace Xamarin.Android.Tasks {
 				case "service":
 					string providerName = "MonoRuntimeProvider_" + procs.Count;
 					providerNames.Add (providerName);
-					app.Add (CreateMonoRuntimeProvider ("mono." + providerName, proc.Value));
+					app.Add (CreateMonoRuntimeProvider ("mono." + providerName, proc.Value, ++AppInitOrder));
 					break;
 				}
 			}
@@ -617,12 +621,14 @@ namespace Xamarin.Android.Tasks {
 			return providerNames;
 		}
 
-		XElement CreateMonoRuntimeProvider (string name, string processName)
+		int AppInitOrder = 2000000000;
+
+		XElement CreateMonoRuntimeProvider (string name, string processName, int initOrder)
 		{
 			return new XElement ("provider",
 						new XAttribute (androidNs + "name", name),
 						new XAttribute (androidNs + "exported", "false"),
-						new XAttribute (androidNs + "initOrder", int.MaxValue.ToString ()),
+						new XAttribute (androidNs + "initOrder", initOrder),
 						processName == null ? null : new XAttribute (androidNs + "process", processName),
 						new XAttribute (androidNs + "authorities", PackageName + "." + name + ".__mono_init__"));
 		}
