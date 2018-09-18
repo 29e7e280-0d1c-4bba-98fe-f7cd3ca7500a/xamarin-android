@@ -17,13 +17,6 @@
  */
 package mono.android;
 import static android.os.Build.VERSION.SDK_INT;
-import static android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH;
-import static android.os.Build.VERSION_CODES.JELLY_BEAN;
-import static android.os.Build.VERSION_CODES.JELLY_BEAN_MR2;
-import static android.os.Build.VERSION_CODES.KITKAT;
-import static android.os.Build.VERSION_CODES.LOLLIPOP;
-import static android.os.Build.VERSION_CODES.M;
-import static android.os.Build.VERSION_CODES.P;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
@@ -46,6 +39,14 @@ import java.util.Map;
  * Code which handles live-patching resources in a running app
  */
 public class MonkeyPatcher {
+    static final int ICE_CREAM_SANDWICH = 14;
+    static final int JELLY_BEAN = 16;
+    static final int JELLY_BEAN_MR2 = 18;
+    static final int KITKAT = 19;
+    static final int LOLLIPOP = 21;
+    static final int M = 23;
+    static final int P = 28;
+
     @SuppressWarnings("unchecked")  // Lots of conversions with generic types
     public static void monkeyPatchApplication(Context context,
                                               Application bootstrap,
@@ -363,7 +364,7 @@ public class MonkeyPatcher {
             } catch (Throwable ignore) {
             }
         }
-        if (SDK_INT >= Build.VERSION_CODES.M) {
+        if (SDK_INT >= M) {
             // Really should only be N; fix this as soon as it has its own API level
             try {
                 Field mResourcesImpl = Resources.class.getDeclaredField("mResourcesImpl");

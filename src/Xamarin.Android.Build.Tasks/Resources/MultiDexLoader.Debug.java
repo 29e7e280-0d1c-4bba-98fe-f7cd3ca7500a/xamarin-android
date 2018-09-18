@@ -67,6 +67,8 @@ import android.util.SparseArray;
 import android.view.ContextThemeWrapper;
 
 public class MultiDexLoader extends ContentProvider {
+
+	static final int KITKAT = 19;
 	
 	@Override
 	public boolean onCreate ()
@@ -200,7 +202,7 @@ public class MultiDexLoader extends ContentProvider {
 				// Older platforms
 				Map activities = (HashMap) collection;
 				c = activities.values();
-			} else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT &&
+			} else if (Build.VERSION.SDK_INT >= KITKAT &&
 					collection instanceof ArrayMap) {
 				ArrayMap activities = (ArrayMap) collection;
 				c = activities.values();
