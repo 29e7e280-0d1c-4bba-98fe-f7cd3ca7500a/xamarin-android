@@ -23,6 +23,7 @@ import static android.os.Build.VERSION_CODES.JELLY_BEAN_MR2;
 import static android.os.Build.VERSION_CODES.KITKAT;
 import static android.os.Build.VERSION_CODES.LOLLIPOP;
 import static android.os.Build.VERSION_CODES.M;
+import static android.os.Build.VERSION_CODES.P;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
@@ -230,9 +231,11 @@ public class MonkeyPatcher {
             }
             // Kitkat needs this method call, Lollipop doesn't. However, it doesn't seem to cause any harm
             // in L, so we do it unconditionally.
-            Method mEnsureStringBlocks = AssetManager.class.getDeclaredMethod("ensureStringBlocks");
-            mEnsureStringBlocks.setAccessible(true);
-            mEnsureStringBlocks.invoke(newAssetManager);
+            if (SDK_INT < P && SDK_INT >= KITKAT) {
+                Method mEnsureStringBlocks = AssetManager.class.getDeclaredMethod("ensureStringBlocks");
+                mEnsureStringBlocks.setAccessible(true);
+                mEnsureStringBlocks.invoke(newAssetManager);
+            }
             if (activities != null) {
                 for (Activity activity : activities) {
                     Resources resources = activity.getResources();
