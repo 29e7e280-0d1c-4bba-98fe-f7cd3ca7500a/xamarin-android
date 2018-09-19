@@ -354,10 +354,10 @@ namespace Xamarin.Android.Tasks {
 			
 			manifest.SetAttributeValue ("package", PackageName);
 
-			var providerNames = AddMonoRuntimeProviders (app);
-
 			if (MultiDex)
 				app.Add (CreateMonoRuntimeProvider ("mono.android.MultiDexLoader", null, initOrder: --AppInitOrder));
+
+			var providerNames = AddMonoRuntimeProviders (app);
 				
 			if (Debug) {
 				app.Add (new XComment ("suppress ExportedReceiver"));
