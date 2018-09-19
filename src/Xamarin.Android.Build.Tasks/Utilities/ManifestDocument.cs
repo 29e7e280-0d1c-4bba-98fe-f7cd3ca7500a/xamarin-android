@@ -355,7 +355,7 @@ namespace Xamarin.Android.Tasks {
 			manifest.SetAttributeValue ("package", PackageName);
 
 			if (MultiDex)
-				app.Add (CreateMonoRuntimeProvider ("mono.android.MultiDexLoader", null, initOrder: --AppInitOrder));
+				app.Add (CreateMultiDexProvider ("mono.android.MultiDexLoader", null, initOrder: --AppInitOrder));
 
 			var providerNames = AddMonoRuntimeProviders (app);
 				
@@ -622,6 +622,14 @@ namespace Xamarin.Android.Tasks {
 		}
 
 		int AppInitOrder = 2000000000;
+
+		XElement CreateMultiDexProvider (string name, int initOrder)
+		{
+			return new XElement ("provider",
+						new XAttribute (androidNs + "name", name),
+						new XAttribute (androidNs + "exported", "false"),
+						new XAttribute (androidNs + "initOrder", initOrder));
+		}
 
 		XElement CreateMonoRuntimeProvider (string name, string processName, int initOrder)
 		{
