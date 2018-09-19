@@ -355,7 +355,7 @@ namespace Xamarin.Android.Tasks {
 			manifest.SetAttributeValue ("package", PackageName);
 
 			if (MultiDex)
-				app.Add (CreateMultiDexProvider ("mono.android.MultiDexLoader", null, initOrder: --AppInitOrder));
+				app.Add (CreateMultiDexProvider ("mono.android.MultiDexLoader", initOrder: --AppInitOrder));
 
 			var providerNames = AddMonoRuntimeProviders (app);
 				
