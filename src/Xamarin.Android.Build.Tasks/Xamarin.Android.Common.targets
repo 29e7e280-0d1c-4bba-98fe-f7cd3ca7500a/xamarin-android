@@ -2694,9 +2694,9 @@ because xbuild doesn't support framework reference assemblies.
 		_StripEmbeddedLibraries;
 		_LinkAssemblies;
 		_GetAddOnPlatformLibraries;
+		_CompileJava;
 		_CompileDex;
 		$(_AfterCompileDex);
-		_CompileJava;
 		_CreateBaseApk;
 		_PrepareAssemblies;
 		_ResolveSatellitePaths;
