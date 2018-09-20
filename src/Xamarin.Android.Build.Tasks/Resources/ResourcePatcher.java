@@ -2,7 +2,7 @@
 // This is a modified version of Bazel source code. Its copyright lines follow below.
 //
 
-// Copyright 2015 Xamarin Inc. All rights reserved.
+// Copyright 2018 Microsoft Corporation. All rights reserved.
 
 //
 // Copyright 2014 The Bazel Authors. All rights reserved.
@@ -65,7 +65,7 @@ import android.view.ContextThemeWrapper;
 
 public class ResourcePatcher extends ContentProvider {
 
-    static final int KITKAT = 19;
+	static final int KITKAT = 19;
 	
 	@Override
 	public boolean onCreate ()
@@ -75,9 +75,9 @@ public class ResourcePatcher extends ContentProvider {
 
 	@Override
 	public void attachInfo (android.content.Context context, android.content.pm.ProviderInfo info) {
-        String externalResourceFile = getExternalResourceFile (context);
+		String externalResourceFile = getExternalResourceFile (context);
 		super.attachInfo (context, info);
-        MonkeyPatcher.monkeyPatchApplication (context, null, null, externalResourceFile);
+		MonkeyPatcher.monkeyPatchApplication (context, null, null, externalResourceFile);
 		MonkeyPatcher.monkeyPatchExistingResources (context, externalResourceFile, getActivities (context, false));
 	}
 	
@@ -112,7 +112,7 @@ public class ResourcePatcher extends ContentProvider {
 		throw new RuntimeException ("This operation is not supported.");
 	}
 
-    private String getExternalResourceFile (android.content.Context context) {
+	private String getExternalResourceFile (android.content.Context context) {
 		String base = MonkeyPatcher.getIncrementalDeploymentDir (context);
 		String resourceFile = base + ".__override__/packaged/packaged_resources";
 		if (!(new File (resourceFile).isFile ())) {
@@ -130,7 +130,7 @@ public class ResourcePatcher extends ContentProvider {
 		return resourceFile;
 	}
 
-    public static List<Activity> getActivities(Context context, boolean foregroundOnly)
+	public static List<Activity> getActivities(Context context, boolean foregroundOnly)
 	{
 		List<Activity> list = new ArrayList<Activity>();
 		try {
