@@ -358,6 +358,9 @@ namespace Xamarin.Android.Tasks {
 				app.Add (CreateMonoRuntimeProvider ("mono.android.MultiDexLoader", null, initOrder: --AppInitOrder));
 
 			var providerNames = AddMonoRuntimeProviders (app);
+
+			if (Debug && !embed)
+				app.Add (CreateMonoRuntimeProvider ("mono.android.ResourcePatcher", null, initOrder: --AppInitOrder));
 				
 			if (Debug) {
 				app.Add (new XComment ("suppress ExportedReceiver"));
@@ -587,7 +590,7 @@ namespace Xamarin.Android.Tasks {
 
 		IList<string> AddMonoRuntimeProviders (XElement app)
 		{
-			app.Add (CreateMonoRuntimeProvider ("mono.MonoRuntimeProvider", null, AppInitOrder));
+			app.Add (CreateMonoRuntimeProvider ("mono.MonoRuntimeProvider", null, --AppInitOrder));
 
 			var providerNames = new List<string> ();
 

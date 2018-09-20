@@ -684,6 +684,9 @@
     <EmbeddedResource Include="Resources\MonkeyPatcher.java">
       <LogicalName>MonkeyPatcher.java</LogicalName>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ResourcePatcher.java">
+      <LogicalName>ResourcePatcher.java</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xamarin.Android.Tools.Aidl\Xamarin.Android.Tools.Aidl.csproj">

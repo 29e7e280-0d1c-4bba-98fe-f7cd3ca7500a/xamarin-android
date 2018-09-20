@@ -17,6 +17,7 @@
  */
 package mono.android;
 import static android.os.Build.VERSION.SDK_INT;
+import java.io.File;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
@@ -500,4 +501,20 @@ public class MonkeyPatcher {
         }
         return false;
     }
+
+    public static String getIncrementalDeploymentDir (Context context)
+	{
+		// For initial setup by Seppuku, it needs to create the dex deployment directory at app bootstrap.
+		// dex is special, important for mono runtime bootstrap.
+		String dir = new File (
+			android.os.Environment.getExternalStorageDirectory (),
+			"Android/data/" + context.getPackageName ()).getAbsolutePath ();
+		dir = new File (dir).exists () ?
+			dir + "/files" :
+			"/data/data/" + context.getPackageName () + "/files";
+		String dexDir = dir + "/.__override__/dexes";
+		if (!new File (dexDir).exists ())
+			new File (dexDir).mkdirs ();
+		return dir + "/";
+	}
 }
